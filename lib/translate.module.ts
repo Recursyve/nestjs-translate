@@ -1,6 +1,9 @@
 import { Module } from "@nestjs/common";
+import { DefaultTranslationParser, TranslateParser } from "./parser/translate.parser";
 
-@Module({})
+@Module({
+    providers: [{ provide: TranslateParser, useClass: DefaultTranslationParser }]
+})
 export class TranslateModule {
     public static forRoot() {
         return {

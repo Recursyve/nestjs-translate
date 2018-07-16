@@ -10,14 +10,21 @@
     "publish-package": "npm run compile && npm publish --access public"
   },
   "peerDependencies": {
-    "@nestjs/common": "^5.1.0"
+    "@nestjs/common": "^5.1.0",
+    "@nestjs/core": "^5.1.0",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.0.0"
   },
   "devDependencies": {
     "@nestjs/common": "^5.1.0",
+    "@nestjs/core": "^5.1.0",
     "@types/express": "^4.0.39",
     "@types/jest": "^23.1.6",
     "@types/node": "^9.3.0",
     "jest": "^23.4.1",
-    "tslint": "5.3.2"
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.0.0",
+    "tslint": "5.3.2",
+    "typescript": "^2.7.0"
   }
 }
