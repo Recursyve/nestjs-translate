@@ -11,7 +11,8 @@ describe('TranslateLoader', () => {
         const translations = await loader.loadLang('en').toPromise();
         expect(translations).toStrictEqual({
             test: "This is a simple tests",
-            translate: "This library should help you to support i18n with NestJs"
+            translate: "This library should help you to support i18n with NestJs",
+            interpolation: "This value has one parameter => {{ value }}"
         });
     });
 
