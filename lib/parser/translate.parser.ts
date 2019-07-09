@@ -8,7 +8,7 @@ export abstract class TranslateParser {
      * @param {string} key
      * @example getValue({ key1: { keyA: "valueI" } }, "key1.keyA") => valueI
      */
-    public abstract getValue(data: any, key: string);
+    public abstract getValue(data: any, key: string): string;
 
     /**
      * Interpolates a string to replace parameters
@@ -16,15 +16,15 @@ export abstract class TranslateParser {
      * @param params
      * @example interpolate("This is a {{ key }}", { key: "value" }) => This is a value
      */
-    public abstract interpolate(expr: string, params?: any);
+    public abstract interpolate(expr: string, params?: any): string;
 }
 
 @Injectable()
 export class DefaultTranslationParser extends TranslateParser {
     private templateMatcher: RegExp = /{{\s?([^{}\s]*)\s?}}/g;
 
-    public getValue(data: any, key: string) {
-        const keys: string[] = key.split('.');
+    public getValue(data: any, key: string): string {
+        const keys: string[] = key.split(".");
 
         do {
             const k = keys.shift();
@@ -40,7 +40,7 @@ export class DefaultTranslationParser extends TranslateParser {
         return data;
     }
 
-    public interpolate(expr: string, params?: any) {
+    public interpolate(expr: string, params?: any): string {
         if (!params) {
             return expr;
         }

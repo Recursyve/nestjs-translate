@@ -3,5 +3,5 @@ import { TranslateService } from './translate.service';
 
 export {
     TranslateModule,
-    TranslateService
-}
+    TranslateService,
+};

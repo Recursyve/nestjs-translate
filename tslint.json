@@ -10,7 +10,7 @@
     "eofline": false,
     "quotemark": [
       true,
-      "single"
+      "double"
     ],
     "indent": false,
     "member-access": [
@@ -49,7 +49,8 @@
     ],
     "one-variable-per-declaration": [
       false
-    ]
+    ],
+    "trailing-comma": false
   },
   "rulesDirectory": []
 }
