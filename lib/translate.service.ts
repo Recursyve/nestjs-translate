@@ -1,18 +1,23 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { Observable } from "rxjs/internal/Observable";
 import { of } from "rxjs/internal/observable/of";
 import { share, take } from "rxjs/operators";
 import { TranslateLoader } from "./loader/translate.loader";
+import { TRANSLATE_OPTIONS, TranslateOptionsModel } from "./models/translate-options.model";
 import { TranslateParser } from "./parser/translate.parser";
 
 @Injectable()
 export class TranslateService {
-    private translations: any = {};
+    private translations: { [lang: string]: unknown } = {};
     private loadingTranslations: Observable<any>;
     private pending = false;
-    private currentLang = "en";
 
-    constructor(private loader: TranslateLoader, private parser: TranslateParser) {
+    constructor(
+        @Inject(TRANSLATE_OPTIONS) private options: TranslateOptionsModel,
+        private loader: TranslateLoader,
+        private parser: TranslateParser
+    ) {
+        this.loadTranslations();
     }
 
     public get(key: string, params?: object): Observable<string>;
@@ -23,14 +28,14 @@ export class TranslateService {
         if (paramsOrKey && typeof paramsOrKey === "object" || !paramsOrKey) {
             params = paramsOrKey as object;
             key = keyOrLang;
-            lang = this.currentLang;
+            lang = this.options.defaultLang;
         } else {
             key = paramsOrKey as string;
             lang = keyOrLang as string;
         }
 
         if (!this.translations[lang]) {
-            this.loadTranslation(lang);
+            this.loadTranslations();
         }
 
         if (this.pending) {
@@ -47,11 +52,11 @@ export class TranslateService {
         }
     }
 
-    private loadTranslation(lang: string): void {
+    private loadTranslations(): void {
         this.pending = true;
-        this.loadingTranslations = this.loader.loadLang(lang).pipe(share());
+        this.loadingTranslations = this.loader.loadTranslations().pipe(share());
         this.loadingTranslations.pipe(take(1)).subscribe(value => {
-            this.translations[lang] = value;
+            this.translations = value;
             this.pending = false;
         }, () => {
             this.pending = false;

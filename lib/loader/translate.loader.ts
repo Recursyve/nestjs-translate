@@ -1,25 +1,33 @@
 import * as fs from "fs";
-import { NoLanguageFoundException } from "../exceptions/no-language-found.exception";
+import { from } from "rxjs";
 import { Observable } from "rxjs/internal/Observable";
-import { Observer } from "rxjs/internal/types";
+import { map } from "rxjs/operators";
+import { promisify } from "util";
 
 export class TranslateLoader {
     constructor(private prefix: string) {
     }
 
-    public loadLang(lang: string): Observable<object> {
-        return new Observable((observer: Observer<object>) => {
-            try {
-                const values = fs.readFileSync(`${this.prefix}/${lang}.json`).toString();
-                observer.next(JSON.parse(values));
-                observer.complete();
-            } catch (err) {
-                if (err.code === "ENOENT") {
-                    observer.error(new NoLanguageFoundException(lang, `${this.prefix}/${lang}.json`));
-                } else {
-                    observer.error(err);
+    public loadTranslations(): Observable<object> {
+        return from(promisify(fs.readdir)(this.prefix)).pipe(
+            map((files: string[]) => {
+                const translations = {};
+                for (const file of files) {
+                    if (!file.endsWith(".json")) {
+                        continue;
+                    }
+
+                    const lang = file.replace(".json", "");
+                    translations[lang] = this.loadLang(lang);
                 }
-            }
-        });
+                return translations;
+            })
+        );
+
+    }
+
+    private loadLang(lang: string): object {
+        const values = fs.readFileSync(`${this.prefix}/${lang}.json`).toString();
+        return JSON.parse(values);
     }
 }

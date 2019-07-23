@@ -6,6 +6,9 @@ describe('TranslateService', () => {
     let service: TranslateService;
     beforeAll(() => {
         service = new TranslateService(
+            {
+                defaultLang: "en"
+            },
             new TranslateLoader(__dirname + '/../assets/i18n'),
             new DefaultTranslationParser()
         );
@@ -13,7 +16,7 @@ describe('TranslateService', () => {
 
     it('get should return the translated value', async () => {
         const translations = await service.get('test').toPromise();
-        expect(translations).toBe("This is a simple tests");
+        expect(translations).toBe("This is a simple test");
     });
 
     it('get should return the translated value with params in it', async () => {
@@ -22,8 +25,8 @@ describe('TranslateService', () => {
     });
 
     it('get should return the translated value with lang overwrite', async () => {
-        const translations = await service.get('en', 'test').toPromise();
-        expect(translations).toBe("This is a simple tests");
+        const translations = await service.get('fr', 'test').toPromise();
+        expect(translations).toBe("Ceci est un simple teste");
     });
 
     it('get should return the translated value with params in it with lang overwrite', async () => {

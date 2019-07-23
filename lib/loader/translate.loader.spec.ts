@@ -1,5 +1,4 @@
-import { NoLanguageFoundException } from "../exceptions/no-language-found.exception";
-import { TranslateLoader } from './translate.loader';
+import { TranslateLoader } from "./translate.loader";
 
 describe('TranslateLoader', () => {
     let loader: TranslateLoader;
@@ -7,21 +6,19 @@ describe('TranslateLoader', () => {
         loader = new TranslateLoader(__dirname + '/../../assets/i18n');
     });
 
-    it('loadLang should load the translation of the given lang', async () => {
-        const translations = await loader.loadLang('en').toPromise();
+    it('loadTranslations should load all the translation of the giving folder', async () => {
+        const translations = await loader.loadTranslations().toPromise();
         expect(translations).toStrictEqual({
-            test: "This is a simple tests",
-            translate: "This library should help you to support i18n with NestJs",
-            interpolation: "This value has one parameter => {{ value }}"
+            en: {
+                test: "This is a simple test",
+                translate: "This library should help you to support i18n with NestJs",
+                interpolation: "This value has one parameter => {{ value }}"
+            },
+            fr: {
+                test: "Ceci est un simple teste",
+                translate: "Cette librairie devrait vous aider à supporter l'i18n avec NestJs",
+                interpolation: "Cette valeur contient un paramètre => {{ value }}"
+            }
         });
-    });
-
-    it('loadLang should throw an exception if the language is not defined', async () => {
-        try {
-            await loader.loadLang('xx').toPromise();
-        } catch (e) {
-            expect(e).toBeInstanceOf(NoLanguageFoundException);
-            expect(e.lang).toBe("xx");
-        }
     });
 });

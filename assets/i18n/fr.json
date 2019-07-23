@@ -1,0 +1,5 @@
+{
+    "test": "Ceci est un simple teste",
+    "translate": "Cette librairie devrait vous aider à supporter l'i18n avec NestJs",
+    "interpolation": "Cette valeur contient un paramètre => {{ value }}"
+}
