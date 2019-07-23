@@ -1,6 +1,6 @@
 {
   "name": "nestjs-translate",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "Translate library for NestJs",
   "author": "Julien Dufresne",
   "license": "MIT",
@@ -9,7 +9,8 @@
     "compile:lib": "tsc -p tsconfig.lib.json",
     "test": "jest --config=jest.json",
     "publish-package": "npm run compile:lib && npm publish --access public",
-    "publish-package:beta": "npm run compile:lib && npm publish --tag beta --access public"
+    "publish-package:beta": "npm run compile:lib && npm publish --tag beta --access public",
+    "publish-package:dry-run": "npm run compile:lib && npm publish --dry-run"
   },
   "peerDependencies": {
     "@nestjs/common": "^6.5.0",
