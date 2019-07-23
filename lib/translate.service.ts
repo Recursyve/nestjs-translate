@@ -52,6 +52,27 @@ export class TranslateService {
         }
     }
 
+    public instant(key: string, params?: object): string;
+    public instant(lang: string, key: string, params?: object): string;
+    public instant(keyOrLang: string, paramsOrKey: string | object, params?: object): string {
+        let key: string;
+        let lang: string;
+        if (paramsOrKey && typeof paramsOrKey === "object" || !paramsOrKey) {
+            params = paramsOrKey as object;
+            key = keyOrLang;
+            lang = this.options.defaultLang;
+        } else {
+            key = paramsOrKey as string;
+            lang = keyOrLang as string;
+        }
+
+        if (!this.translations[lang]) {
+            return keyOrLang;
+        }
+
+        return this.getTranslatedValue(this.translations[lang], key, params);
+    }
+
     private loadTranslations(): void {
         this.pending = true;
         this.loadingTranslations = this.loader.loadTranslations().pipe(share());
