@@ -5,19 +5,42 @@ import { share, take } from "rxjs/operators";
 import { TranslateLoader } from "./loader/translate.loader";
 import { TRANSLATE_OPTIONS, TranslateOptionsModel } from "./models/translate-options.model";
 import { TranslateParser } from "./parser/translate.parser";
+import { TranslateStore } from "./store/translate.store";
 
 @Injectable()
 export class TranslateService {
-    private translations: { [lang: string]: unknown } = {};
+    private _translations: { [lang: string]: unknown } = {};
     private loadingTranslations: Observable<any>;
     private pending = false;
 
+    private set defaultLang(defaultLang: string) {
+        if (!this.options.feature) {
+            this.store.defaultLang = defaultLang;
+        }
+    }
+    private get defaultLang(): string {
+        return this.store.defaultLang;
+    }
+
+    private set translations(translations: { [lang: string]: unknown }) {
+        if (this.options.feature) {
+            this._translations = translations;
+        } else {
+            this.store.translations = translations;
+        }
+    }
+    private get translations(): { [lang: string]: unknown } {
+        return this.options.feature ? this._translations : this.store.translations;
+    }
+
     constructor(
         @Inject(TRANSLATE_OPTIONS) private options: TranslateOptionsModel,
+        private store: TranslateStore,
         private loader: TranslateLoader,
         private parser: TranslateParser
     ) {
         this.loadTranslations();
+        this.defaultLang = this.options.defaultLang;
     }
 
     public get(key: string, params?: object): Observable<string>;
@@ -28,7 +51,7 @@ export class TranslateService {
         if (paramsOrKey && typeof paramsOrKey === "object" || !paramsOrKey) {
             params = paramsOrKey as object;
             key = keyOrLang;
-            lang = this.options.defaultLang;
+            lang = this.defaultLang;
         } else {
             key = paramsOrKey as string;
             lang = keyOrLang as string;
@@ -41,14 +64,14 @@ export class TranslateService {
         if (this.pending) {
             return new Observable(observer => {
                 this.loadingTranslations.subscribe(() => {
-                    observer.next(this.getTranslatedValue(this.translations[lang], key, params));
+                    observer.next(this.getTranslatedValue(lang, key, params));
                     observer.complete();
                 }, error => {
                     observer.error(error);
                 });
             });
         } else {
-            return of(this.getTranslatedValue(this.translations[lang], key, params));
+            return of(this.getTranslatedValue(lang, key, params));
         }
     }
 
@@ -60,7 +83,7 @@ export class TranslateService {
         if (paramsOrKey && typeof paramsOrKey === "object" || !paramsOrKey) {
             params = paramsOrKey as object;
             key = keyOrLang;
-            lang = this.options.defaultLang;
+            lang = this.defaultLang;
         } else {
             key = paramsOrKey as string;
             lang = keyOrLang as string;
@@ -70,7 +93,7 @@ export class TranslateService {
             return keyOrLang;
         }
 
-        return this.getTranslatedValue(this.translations[lang], key, params);
+        return this.getTranslatedValue(lang, key, params);
     }
 
     private loadTranslations(): void {
@@ -84,7 +107,12 @@ export class TranslateService {
         });
     }
 
-    private getTranslatedValue(translation: any, key: string, params?: any): string {
-        return this.parser.interpolate(this.parser.getValue(translation, key), params);
+    private getTranslatedValue(lang: string, key: string, params?: any): string {
+        const translation = this.parser.interpolate(this.parser.getValue(this.translations[lang], key), params);
+        if (translation !== key || !this.options.feature) {
+            return translation;
+        }
+
+        return this.parser.interpolate(this.parser.getValue(this.store.translations[lang], key), params);
     }
 }

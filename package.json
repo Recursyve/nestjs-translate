@@ -1,6 +1,6 @@
 {
   "name": "nestjs-translate",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "description": "Translate library for NestJs",
   "author": "Julien Dufresne",
   "license": "MIT",
