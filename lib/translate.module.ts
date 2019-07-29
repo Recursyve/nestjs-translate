@@ -1,4 +1,4 @@
-import { DynamicModule, Global, Module } from "@nestjs/common";
+import { DynamicModule, Global, Module, Scope } from "@nestjs/common";
 import { TranslateLoader } from "./loader/translate.loader";
 import { TRANSLATE_OPTIONS } from "./models/translate-options.model";
 import { DefaultTranslationParser, TranslateParser } from "./parser/translate.parser";
@@ -48,7 +48,7 @@ export class TranslateModule {
                 },
                 { provide: TranslateParser, useClass: DefaultTranslationParser },
                 { provide: TranslateLoader, useValue: new TranslateLoader(config.prefix) },
-                TranslateService
+                { provide: TranslateService, useClass: TranslateService, scope: Scope.TRANSIENT }
             ],
             exports: [
                 TranslateService
