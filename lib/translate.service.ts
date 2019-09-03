@@ -133,7 +133,7 @@ export class TranslateService {
     }
 
     public getLangs(): Array<string> {
-        return this.langs;
+        return this.options.feature ? this.langs : this.store.langs;
     }
 
     public addLangs(langs: Array<string>): void {
