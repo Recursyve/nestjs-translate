@@ -132,6 +132,10 @@ export class TranslateService {
         return this.parser.interpolate(this.parser.getValue(this.store.translations[lang], key), params);
     }
 
+    public getLangs(): Array<string> {
+        return this.langs;
+    }
+
     public addLangs(langs: Array<string>): void {
         langs.forEach((lang: string) => {
             if (this.langs.indexOf(lang) === -1) {
