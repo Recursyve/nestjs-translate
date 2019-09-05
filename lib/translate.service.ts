@@ -10,6 +10,7 @@ import { TranslateStore } from "./store/translate.store";
 @Injectable()
 export class TranslateService {
     private _translations: { [lang: string]: unknown } = {};
+    private _langs: string[] = [];
     private loadingTranslations: Observable<any>;
     private pending = false;
 
@@ -18,6 +19,7 @@ export class TranslateService {
             this.store.defaultLang = defaultLang;
         }
     }
+
     private get defaultLang(): string {
         return this.store.defaultLang;
     }
@@ -29,8 +31,21 @@ export class TranslateService {
             this.store.translations = translations;
         }
     }
+
     private get translations(): { [lang: string]: unknown } {
         return this.options.feature ? this._translations : this.store.translations;
+    }
+
+    private get langs(): string[] {
+        return this.options.feature ? this._langs : this.store.langs;
+    }
+
+    private set langs(langs: string[]) {
+        if (this.options.feature) {
+            this._langs = langs;
+        } else {
+            this.store.langs = langs;
+        }
     }
 
     constructor(
@@ -101,6 +116,7 @@ export class TranslateService {
         this.loadingTranslations = this.loader.loadTranslations().pipe(share());
         this.loadingTranslations.pipe(take(1)).subscribe(value => {
             this.translations = value;
+            this.updateLangs();
             this.pending = false;
         }, () => {
             this.pending = false;
@@ -114,5 +130,21 @@ export class TranslateService {
         }
 
         return this.parser.interpolate(this.parser.getValue(this.store.translations[lang], key), params);
+    }
+
+    public getLangs(): Array<string> {
+        return this.options.feature ? this.langs : this.store.langs;
+    }
+
+    public addLangs(langs: Array<string>): void {
+        langs.forEach((lang: string) => {
+            if (this.langs.indexOf(lang) === -1) {
+                this.langs.push(lang);
+            }
+        });
+    }
+
+    private updateLangs(): void {
+        this.addLangs(Object.keys(this.translations));
     }
 }
