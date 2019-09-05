@@ -90,7 +90,7 @@ export class TranslateService {
         }
 
         if (!this.translations[lang]) {
-            return keyOrLang;
+            return key;
         }
 
         return this.getTranslatedValue(lang, key, params);
