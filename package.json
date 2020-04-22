@@ -1,6 +1,6 @@
 {
   "name": "nestjs-translate",
-  "version": "1.0.0-beta.12",
+  "version": "7.0.0-beta.13",
   "description": "Translate library for NestJs",
   "author": "Julien Dufresne",
   "license": "MIT",
@@ -13,21 +13,21 @@
     "publish-package:dry-run": "npm run compile:lib && npm publish --dry-run"
   },
   "peerDependencies": {
-    "@nestjs/common": "^6.5.0",
-    "@nestjs/core": "^6.5.0",
+    "@nestjs/common": "^7.0.0",
+    "@nestjs/core": "^7.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.2"
   },
   "devDependencies": {
-    "@nestjs/common": "^6.5.0",
-    "@nestjs/core": "^6.5.0",
-    "@types/express": "^4.0.39",
-    "@types/jest": "^24.0.15",
-    "@types/node": "^9.3.0",
-    "jest": "^24.8.0",
+    "@nestjs/common": "^7.0.8",
+    "@nestjs/core": "^7.0.8",
+    "@types/express": "^4.17.6",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^12.12.37",
+    "jest": "^25.4.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.2",
-    "tslint": "5.3.2",
-    "typescript": "^3.5.3"
+    "tslint": "^6.1.1",
+    "typescript": "^3.8.3"
   }
 }
