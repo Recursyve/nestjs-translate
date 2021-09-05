@@ -1,13 +1,14 @@
+import { firstValueFrom } from "rxjs";
 import { TranslateLoader } from "./translate.loader";
 
-describe('TranslateLoader', () => {
+describe("TranslateLoader", () => {
     let loader: TranslateLoader;
     beforeAll(() => {
-        loader = new TranslateLoader(__dirname + '/../../assets/i18n');
+        loader = new TranslateLoader(__dirname + "/../../assets/i18n");
     });
 
-    it('loadTranslations should load all the translation of the giving folder', async () => {
-        const translations = await loader.loadTranslations().toPromise();
+    it("loadTranslations should load all the translation of the giving folder", async () => {
+        const translations = await firstValueFrom(loader.loadTranslations());
         expect(translations).toStrictEqual({
             en: {
                 test: "This is a simple test",

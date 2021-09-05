@@ -1,6 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Observable } from "rxjs/internal/Observable";
-import { of } from "rxjs/internal/observable/of";
+import { Observable, of } from "rxjs";
 import { share, take } from "rxjs/operators";
 import { TranslateLoader } from "./loader/translate.loader";
 import { TRANSLATE_OPTIONS, TranslateOptionsModel } from "./models/translate-options.model";

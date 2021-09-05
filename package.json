@@ -1,33 +1,33 @@
 {
-  "name": "nestjs-translate",
-  "version": "7.0.0-beta.13",
-  "description": "Translate library for NestJs",
-  "author": "Julien Dufresne",
-  "license": "MIT",
-  "scripts": {
-    "compile": "tsc -p tsconfig.json",
-    "compile:lib": "tsc -p tsconfig.lib.json",
-    "test": "jest --config=jest.json",
-    "publish-package": "npm run compile:lib && npm publish --access public",
-    "publish-package:beta": "npm run compile:lib && npm publish --tag beta --access public",
-    "publish-package:dry-run": "npm run compile:lib && npm publish --dry-run"
-  },
-  "peerDependencies": {
-    "@nestjs/common": "^7.0.0",
-    "@nestjs/core": "^7.0.0",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^6.5.2"
-  },
-  "devDependencies": {
-    "@nestjs/common": "^7.0.8",
-    "@nestjs/core": "^7.0.8",
-    "@types/express": "^4.17.6",
-    "@types/jest": "^25.2.1",
-    "@types/node": "^12.12.37",
-    "jest": "^25.4.0",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^6.5.2",
-    "tslint": "^6.1.1",
-    "typescript": "^3.8.3"
-  }
+    "name": "nestjs-translate",
+    "version": "8.0.0-beta.14",
+    "description": "Translate library for NestJs",
+    "author": "Julien Dufresne",
+    "license": "MIT",
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "compile:lib": "tsc -p tsconfig.lib.json",
+        "test": "jest --config=jest.json",
+        "publish-package": "npm run compile:lib && npm publish --access public",
+        "publish-package:beta": "npm run compile:lib && npm publish --tag beta --access public",
+        "publish-package:dry-run": "npm run compile:lib && npm publish --dry-run"
+    },
+    "peerDependencies": {
+        "@nestjs/common": "^8.0.0",
+        "@nestjs/core": "^8.0.0",
+        "reflect-metadata": "^0.1.13",
+        "rxjs": "^7.0.0"
+    },
+    "devDependencies": {
+        "@nestjs/common": "^8.0.6",
+        "@nestjs/core": "^8.0.6",
+        "@types/express": "^4.17.13",
+        "@types/jest": "^27.0.1",
+        "@types/node": "^14.17.14",
+        "jest": "^27.1.0",
+        "reflect-metadata": "^0.1.13",
+        "rxjs": "^7.3.0",
+        "tslint": "^6.1.3",
+        "typescript": "^4.4.2"
+    }
 }

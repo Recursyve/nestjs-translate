@@ -1,6 +1,5 @@
 import * as fs from "fs";
-import { from } from "rxjs";
-import { Observable } from "rxjs/internal/Observable";
+import { from, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { promisify } from "util";
 

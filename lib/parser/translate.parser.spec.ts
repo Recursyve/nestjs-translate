@@ -13,58 +13,58 @@ const values = {
     }
 };
 
-describe('TranslateParser', () => {
+describe("TranslateParser", () => {
     let parser: TranslateParser;
     beforeAll(() => {
         parser = new DefaultTranslationParser();
     });
 
-    it('getValue should return the value associate to a key', () => {
-        const value = parser.getValue(values, 'simple');
-        expect(value).toBe('Simple value');
+    it("getValue should return the value associate to a key", () => {
+        const value = parser.getValue(values, "simple");
+        expect(value).toBe("Simple value");
     });
 
-    it('getValue should return the value associate to a key chain', async () => {
-        const value = parser.getValue(values, 'nested.value');
-        expect(value).toBe('Nested value');
+    it("getValue should return the value associate to a key chain", async () => {
+        const value = parser.getValue(values, "nested.value");
+        expect(value).toBe("Nested value");
     });
 
-    it('getValue should return the key if no data is found with the given key', async () => {
-        const value = parser.getValue(values, 'unknown.key');
-        expect(value).toBe('unknown.key');
+    it("getValue should return the key if no data is found with the given key", async () => {
+        const value = parser.getValue(values, "unknown.key");
+        expect(value).toBe("unknown.key");
     });
 
-    describe('interpolate should return the string with the param in it', () => {
-        it('with {{ value }}', function () {
-            let value = parser.getValue(values, 'interpolation');
+    describe("interpolate should return the string with the param in it", () => {
+        it("with {{ value }}", () => {
+            let value = parser.getValue(values, "interpolation");
             value = parser.interpolate(value, {
-                value: 'example'
+                value: "example"
             });
-            expect(value).toBe('Its an interpolation example')
+            expect(value).toBe("Its an interpolation example")
         });
 
-        it('with {{value }}', function () {
-            let value = parser.getValue(values, 'interpolations.test0');
+        it("with {{value }}", () => {
+            let value = parser.getValue(values, "interpolations.test0");
             value = parser.interpolate(value, {
-                value: 'example'
+                value: "example"
             });
-            expect(value).toBe('Its an interpolation example')
+            expect(value).toBe("Its an interpolation example")
         });
 
-        it('with {{ value}}', function () {
-            let value = parser.getValue(values, 'interpolations.test1');
+        it("with {{ value}}", () => {
+            let value = parser.getValue(values, "interpolations.test1");
             value = parser.interpolate(value, {
-                value: 'example'
+                value: "example"
             });
-            expect(value).toBe('Its an interpolation example')
+            expect(value).toBe("Its an interpolation example")
         });
 
-        it('with {{value}}', function () {
-            let value = parser.getValue(values, 'interpolations.test2');
+        it("with {{value}}", () => {
+            let value = parser.getValue(values, "interpolations.test2");
             value = parser.interpolate(value, {
-                value: 'example'
+                value: "example"
             });
-            expect(value).toBe('Its an interpolation example')
+            expect(value).toBe("Its an interpolation example")
         });
     });
 });
