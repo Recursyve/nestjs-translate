@@ -1,6 +1,6 @@
 {
     "name": "nestjs-translate",
-    "version": "8.0.0-beta.14",
+    "version": "8.0.0-beta.15",
     "description": "Translate library for NestJs",
     "author": "Julien Dufresne",
     "license": "MIT",
@@ -13,10 +13,9 @@
         "publish-package:dry-run": "npm run compile:lib && npm publish --dry-run"
     },
     "peerDependencies": {
-        "@nestjs/common": "^8.0.0",
-        "@nestjs/core": "^8.0.0",
-        "reflect-metadata": "^0.1.13",
-        "rxjs": "^7.0.0"
+        "@nestjs/common": ">=8.0.0",
+        "@nestjs/core": ">=8.0.0",
+        "rxjs": ">=7.0.0"
     },
     "devDependencies": {
         "@nestjs/common": "^8.0.6",
