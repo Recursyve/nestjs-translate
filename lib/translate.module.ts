@@ -13,13 +13,13 @@ export interface TranslateModuleConfig {
 @Global()
 @Module({})
 export class TranslateModule {
-    public static forRoot(config?: TranslateModuleConfig): DynamicModule {
+    public static forRoot(config: TranslateModuleConfig): DynamicModule {
         return {
             module: TranslateModule,
             providers: [
                 {
                     provide: TRANSLATE_OPTIONS, useValue: {
-                        ...config,
+                        ...(config),
                         defaultLang: config.defaultLang || "en",
                         feature: false
                     }
@@ -36,7 +36,7 @@ export class TranslateModule {
         };
     }
 
-    public static forFeature(config?: TranslateModuleConfig): DynamicModule {
+    public static forFeature(config: TranslateModuleConfig): DynamicModule {
         return {
             module: TranslateModule,
             providers: [

@@ -10,7 +10,7 @@ import { TranslateStore } from "./store/translate.store";
 export class TranslateService {
     private _translations: { [lang: string]: unknown } = {};
     private _langs: string[] = [];
-    private loadingTranslations: Observable<any>;
+    private loadingTranslations?: Observable<any>;
     private pending = false;
 
     private set defaultLang(defaultLang: string) {
@@ -59,7 +59,7 @@ export class TranslateService {
 
     public get(key: string, params?: object): Observable<string>;
     public get(lang: string, key: string, params?: object): Observable<string>;
-    public get(keyOrLang: string, paramsOrKey: string | object, params?: object): Observable<string> {
+    public get(keyOrLang: string, paramsOrKey: string | object | undefined, params?: object): Observable<string> {
         let key: string;
         let lang: string;
         if (paramsOrKey && typeof paramsOrKey === "object" || !paramsOrKey) {
@@ -77,7 +77,7 @@ export class TranslateService {
 
         if (this.pending) {
             return new Observable(observer => {
-                this.loadingTranslations.subscribe(() => {
+                this.loadingTranslations?.subscribe(() => {
                     observer.next(this.getTranslatedValue(lang, key, params));
                     observer.complete();
                 }, error => {
@@ -91,7 +91,7 @@ export class TranslateService {
 
     public instant(key: string, params?: object): string;
     public instant(lang: string, key: string, params?: object): string;
-    public instant(keyOrLang: string, paramsOrKey: string | object, params?: object): string {
+    public instant(keyOrLang: string, paramsOrKey: string | object | undefined, params?: object): string {
         let key: string;
         let lang: string;
         if (paramsOrKey && typeof paramsOrKey === "object" || !paramsOrKey) {

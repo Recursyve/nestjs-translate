@@ -27,7 +27,7 @@ export class DefaultTranslationParser extends TranslateParser {
         const keys: string[] = key.split(".");
 
         do {
-            const k = keys.shift();
+            const k = keys.shift() as string;
             if (!data || !data.hasOwnProperty(k)) {
                 return key;
             }
